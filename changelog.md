@@ -1,0 +1,3 @@
+| Version | Date     | Changes                                                                                                                     |
+|---------|----------|-----------------------------------------------------------------------------------------------------------------------------|
+| 0.0.1   | 08/21/23 | * First functional version.<br>* Takes the URl as an input, check if it is invalid and prints the result in case of success |
