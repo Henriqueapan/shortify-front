@@ -1,7 +1,8 @@
-# Vue 3 + Vite
+# Quick local setup
+- Clone the repo
+- Execute npm install
+- Create a free account/api token on [bitly](https://app.bitly.com/settings/api/) if you do not have one
+- Set a (preferably temporary) environment variable VITE_API_TOKEN with you api token
+- Execute npm run dev
+- Access http://localhost:5173
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
-
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
