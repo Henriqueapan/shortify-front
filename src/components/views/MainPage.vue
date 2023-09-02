@@ -2,6 +2,8 @@
   import Card from "primevue/card"
   import InputText from "primevue/inputtext";
   import Button from "primevue/button";
+  import Message from "primevue/message";
+  import { useToast } from "primevue/usetoast";
   import {ref} from "vue";
   import API from "@/api"
 
@@ -11,8 +13,12 @@
 
   const isInvalidUrl = ref(false);
 
+  const message = ref([]);
+
+  const toastSvc = useToast();
+
   const invalidUrlErrorMessage =
-      "Invalid URL. Make sure your URL is in the follow format: scheme://host/path?query#fragment\n Example: " +
+      "Invalid URL. Make sure your URL is in the following format: scheme://host/path?query#fragment\n Example: " +
       "https://www.google.com"
 
   // cardPassThrough is used to control the style of the Card component`s inner elements with the pt prop
@@ -41,10 +47,43 @@
       });
       shortUrl.value = response.data.link;
       isInvalidUrl.value = false;
+      setErrorMessageVisibility(false);
     } catch (httpError) {
       console.error("Request error", httpError);
       isInvalidUrl.value = true;
+      setErrorMessageVisibility(true);
     }
+  }
+
+  const copyShortUrl = async () => {
+    console.log("Entrei")
+    await navigator.clipboard.writeText(shortUrl.value)
+        .then(() => {
+          console.log("then")
+          toastSvc.add({
+            severity: "success",
+            summary: "Short URL copied",
+            detail: "The short URL has been copied to your clipboard!",
+            life: 10000
+          })
+        })
+        .catch((error) => {
+          console.error(
+              "Error when copying short URL to clipboard. Please contact the developer at https://github.com/Henriqueapan/",
+              error
+          );
+          toastSvc.add({
+            severity: "error",
+            summary: "Short URL was not copied",
+            detail: "An error occurred when trying to copy the short URL to your clipboard! Please contact the " +
+                "developer at https://github.com/Henriqueapan/",
+            life: 10000
+          })
+        });
+  }
+
+  const setErrorMessageVisibility = (on) => {
+    message.value = on ? [{ severity: "error", content: invalidUrlErrorMessage }] : [];
   }
 </script>
 
@@ -67,7 +106,7 @@
                   :class="`w-full mt-1 h-3rem text-lg ${isInvalidUrl ? 'p-invalid' : ''}`"
               ></InputText>
               </label>
-              <small class="p-error" id="text-error" style="white-space: pre-line;">{{ isInvalidUrl ? invalidUrlErrorMessage : '&nbsp;' }}</small>
+                <Message v-for="msg of message" :key="msg.id" :severity="msg.severity" @close="setErrorMessageVisibility(false)">{{ msg.content }}</Message>
             </div>
 
             <div class="field text-center pb-2">
@@ -76,10 +115,8 @@
 
           </div>
 
-          <div v-if="shortUrl" class="w-full flex align-items-center justify-content-center py-3 sm:py-4" id="main-card--result">
-            <div class="text-center font-medium">
-              <Button class="text-3xl xs-text-2xl sm:text-5xl text-white font-medium" link :href="shortUrl">{{ shortUrl }}</Button>
-            </div>
+          <div v-if="shortUrl" class="w-full flex align-items-center justify-content-center text-center py-3 sm:py-4" id="main-card--result">
+            <Button class="text-3xl xs-text-2xl sm:text-5xl text-white font-medium" text @click="copyShortUrl">{{ shortUrl }}</Button>
           </div>
 
         </div>
