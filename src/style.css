@@ -59,7 +59,7 @@ body {
 #app {
   width: 100vw;
   height: 100vh;
-  background-image: url("src/assets/svg/flat-mountains.svg");
+  background-image: url("@/assets/svg/flat-mountains.svg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: bottom center;
