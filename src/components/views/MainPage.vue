@@ -100,7 +100,7 @@
           <div class="px-3">
 
             <div class="field mb-3">
-              <label class="font-semibold text-2xl w-full">URL
+              <label class="font-semibold text-2xl w-full text-color-secondary">URL
               <InputText
                   v-model="inputUrl"
                   placeholder="https://long-url.com"
