@@ -6,7 +6,8 @@
 <template>
   <div id="main-container">
     <MainPage></MainPage>
-    <Toast position="bottom-center"></Toast>
+    <Toast group="clipboardCopy" position="bottom-center" class="w-18rem sm:w-25rem">
+    </Toast>
   </div>
 </template>
 

@@ -56,16 +56,16 @@
   }
 
   const copyShortUrl = async () => {
-    console.log("Entrei")
     await navigator.clipboard.writeText(shortUrl.value)
         .then(() => {
-          console.log("then")
+          toastSvc.removeGroup("clipboardCopy");
           toastSvc.add({
             severity: "success",
             summary: "Short URL copied",
             detail: "The short URL has been copied to your clipboard!",
-            life: 10000
-          })
+            life: 10000,
+            group: "clipboardCopy"
+          });
         })
         .catch((error) => {
           console.error(
@@ -77,7 +77,8 @@
             summary: "Short URL was not copied",
             detail: "An error occurred when trying to copy the short URL to your clipboard! Please contact the " +
                 "developer at https://github.com/Henriqueapan/",
-            life: 10000
+            life: 10000,
+            group: "clipboardCopy"
           })
         });
   }
@@ -99,7 +100,7 @@
           <div class="px-3">
 
             <div class="field mb-3">
-              <label class="font-semibold text-xl w-full">URL
+              <label class="font-semibold text-2xl w-full">URL
               <InputText
                   v-model="inputUrl"
                   placeholder="https://long-url.com"
@@ -115,8 +116,11 @@
 
           </div>
 
-          <div v-if="shortUrl" class="w-full flex align-items-center justify-content-center text-center py-3 sm:py-4" id="main-card--result">
-            <Button class="text-3xl xs-text-2xl sm:text-5xl text-white font-medium" text @click="copyShortUrl">{{ shortUrl }}</Button>
+          <div v-if="shortUrl" class="w-full" id="main-card--result">
+            <Button class="text-xl sm:text-5xl text-white font-medium w-full h-full py-3 sm:py-4 justify-content-center" text @click="copyShortUrl">
+              <span >{{ shortUrl }}</span>
+              <i class="pi pi-copy text-2xl sm:text-5xl absolute" style="width:0; right: 10%"></i>
+            </Button>
           </div>
 
         </div>
