@@ -41,12 +41,15 @@
   }
 
   const shortify = async () => {
+    // TODO: Loading modal
     try {
-      const response = await API.axios.post("/shorten", {
-        "long_url": inputUrl.value
+      const response = await API.axios.post("/shortify/api/v1/uri-record/create", {
+        "uri": inputUrl.value
       });
-      shortUrl.value = response.data.link;
+
+      shortUrl.value = response.headers.get("location");
       isInvalidUrl.value = false;
+
       setErrorMessageVisibility(false);
     } catch (httpError) {
       console.error("Request error", httpError);

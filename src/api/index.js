@@ -1,7 +1,6 @@
 import axios from "axios";
-import config from "../config/config.js";
 
-const BASE_URL = "https://api-ssl.bitly.com/v4";
+const BASE_URL = "http://localhost:8088"
 
 export default new (class Config {
     constructor() {
@@ -14,8 +13,7 @@ export default new (class Config {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization': `Bearer ${config.bitLyApiToken}`,
-                'Connection': 'keep-alive'
+                //'Authorization': `Bearer a80334ea4c45625928d5a80c7dbedac757aa5ba3`
             },
         });
     }
